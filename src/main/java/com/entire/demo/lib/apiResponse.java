@@ -1,4 +1,4 @@
-package lib;
+package com.entire.demo.lib;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ public class apiResponse {
     private HttpStatus status;
     private Object data;
 
-    public ResponseEntity<apiResponse> handleResponse(String message, HttpStatus status, Object data) {
+    public static ResponseEntity<apiResponse> handleResponse(String message, HttpStatus status, Object data) {
         apiResponse response = new apiResponse(message, status, data);
         return new ResponseEntity<>(response, status    );
     }

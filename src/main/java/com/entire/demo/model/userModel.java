@@ -1,4 +1,4 @@
-package model;
+package com.entire.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Table(name="users")
 public class userModel {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
     private String name;
 
     @Column(unique = true)
