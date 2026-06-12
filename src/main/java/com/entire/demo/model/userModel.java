@@ -20,6 +20,5 @@ public class userModel {
     @Column(unique = true)
     private String email;
 
-    @JsonIgnore
     private String password;
 }
