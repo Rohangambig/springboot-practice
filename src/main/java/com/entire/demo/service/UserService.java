@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface UserService {
     ResponseEntity<apiResponse> addUser(@RequestBody userModel user);
-//    ResponseEntity<apiResponse> getAllUsers();
+    ResponseEntity<apiResponse> getAllUsers();
 }
