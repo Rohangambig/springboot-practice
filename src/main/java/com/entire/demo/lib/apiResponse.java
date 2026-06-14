@@ -14,8 +14,8 @@ public class apiResponse {
     private HttpStatus status;
     private Object data;
 
-    public static ResponseEntity<apiResponse> handleResponse(String message, HttpStatus status, Object data) {
-        apiResponse response = new apiResponse(message, status, data);
+    public static ResponseEntity<apiResponse> handleResponse(String message, HttpStatus status, Object data1) {
+        apiResponse response = new apiResponse(message, status, data1);
         return new ResponseEntity<>(response, status    );
     }
 }
