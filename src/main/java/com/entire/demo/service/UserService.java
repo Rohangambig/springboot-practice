@@ -5,9 +5,11 @@ import com.entire.demo.lib.apiResponse;
 import com.entire.demo.model.userModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 public interface UserService {
     ResponseEntity<apiResponse> addUser(userModel user);
     ResponseEntity<apiResponse> getAllUsers();
     ResponseEntity<apiResponse> login(LoginRequestDTO user);
+    ResponseEntity<apiResponse> tokenValidation(String token);
 }

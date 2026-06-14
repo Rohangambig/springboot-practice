@@ -61,4 +61,20 @@ public class user {
              return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
          }
     }
+
+    @GetMapping("/token-validation")
+    public ResponseEntity<apiResponse> TokenValidation(@RequestHeader("Authorization") String token) {
+        try {
+            String jwtToken = token.split(" ")[1];
+            return user_service.tokenValidation(jwtToken);
+        }catch(Exception e) {
+            apiResponse response = new apiResponse(
+                    e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    null
+            );
+
+            return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

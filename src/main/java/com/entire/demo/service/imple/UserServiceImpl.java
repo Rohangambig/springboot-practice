@@ -2,15 +2,19 @@ package com.entire.demo.service.imple;
 
 import com.entire.demo.dto.LoginRequestDTO;
 import com.entire.demo.dto.UserDTO;
+import com.entire.demo.lib.JwtImpl;
 import com.entire.demo.lib.PasswordConfig;
 import com.entire.demo.lib.apiResponse;
 import com.entire.demo.model.userModel;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.entire.demo.repository.userRepo;
 import com.entire.demo.service.UserService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordConfig bCryptPasswordEncoder;
+
 
     public ResponseEntity<apiResponse> addUser(userModel user) {
         String hashedPassword = user.getPassword();
@@ -54,6 +59,13 @@ public class UserServiceImpl implements UserService {
         if(!isPasswordMatch)
             return apiResponse.handleResponse("Wrong password",HttpStatus.UNAUTHORIZED,user);
 
-        return apiResponse.handleResponse("login successful",HttpStatus.OK,user);
+        String JWT_TOKEN = JwtImpl.generateToken(getUser);
+        return apiResponse.handleResponse("login successful",HttpStatus.OK,JWT_TOKEN);
     }
+
+    public ResponseEntity<apiResponse> tokenValidation(String token) {
+        Claims data = JwtImpl.validateToken(token);
+        return apiResponse.handleResponse("token validated",HttpStatus.OK,data);
+    }
+
 }
