@@ -1,6 +1,5 @@
 package com.entire.demo.config;
 
-import com.entire.demo.lib.JwtImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,14 +16,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http.csrf(AbstractHttpConfigurer::disable);
-        http.authorizeHttpRequests(customize ->
-                customize.requestMatchers("/login","/register").permitAll()
-                        .anyRequest().authenticated()
-        );
-
+//        http.authorizeHttpRequests(customize -> customize.anyRequest().authenticated());
         http.httpBasic(Customizer.withDefaults());
+//        http.formLogin(Customizer.withDefaults());
         http.sessionManagement(customize -> customize.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.addFilterBefore(JwtImpl);
         return http.build();
     }
 
