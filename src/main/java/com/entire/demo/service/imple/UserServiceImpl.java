@@ -1,6 +1,5 @@
 package com.entire.demo.service.imple;
 
-import com.entire.demo.dto.LoginRequestDTO;
 import com.entire.demo.dto.UserDTO;
 import com.entire.demo.lib.PasswordConfig;
 import com.entire.demo.lib.apiResponse;
@@ -38,22 +37,5 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
 
         return apiResponse.handleResponse("users data fetched successfully",HttpStatus.OK,data);
-    }
-
-    public ResponseEntity<apiResponse> login(LoginRequestDTO user) {
-        userModel getUser = user_repo.findByEmail(user.getEmail());
-        if(getUser == null)
-            return apiResponse.handleResponse("User not found",HttpStatus.NOT_FOUND,user);
-
-        boolean isPasswordMatch = bCryptPasswordEncoder.bCryptPasswordEncoder()
-                .matches(
-                        user.getPassword(),
-                        getUser.getPassword()
-                );
-
-        if(!isPasswordMatch)
-            return apiResponse.handleResponse("Wrong password",HttpStatus.UNAUTHORIZED,user);
-
-        return apiResponse.handleResponse("login successful",HttpStatus.OK,user);
     }
 }
