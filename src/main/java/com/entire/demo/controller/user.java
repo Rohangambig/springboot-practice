@@ -1,5 +1,6 @@
 package com.entire.demo.controller;
 
+import com.entire.demo.dto.LoginRequestDTO;
 import com.entire.demo.lib.apiResponse;
 import com.entire.demo.model.userModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,20 @@ public class user {
             );
             return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<apiResponse> login(@RequestBody LoginRequestDTO user) {
+         try {
+                return user_service.login(user);
+         }catch(Exception e) {
+             apiResponse response = new apiResponse(
+                     e.getMessage(),
+                     HttpStatus.INTERNAL_SERVER_ERROR,
+                     null
+             );
+
+             return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+         }
     }
 }
