@@ -5,9 +5,13 @@ import com.entire.demo.Model.UserModel;
 import com.entire.demo.service.userService;
 import com.entire.demo.utili.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping
@@ -56,8 +60,8 @@ public class UserController {
     @GetMapping("/all")
     ResponseEntity<Response> getUsers() {
         try {
-
-            return user_service.getUsers();
+            Pageable pageable = PageRequest.of(0,2, Sort.by("id"));
+            return user_service.getUsers(pageable);
 
         }catch(Exception e) {
             Response res = new Response(
