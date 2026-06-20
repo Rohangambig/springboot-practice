@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
+
+import java.net.UnknownServiceException;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,14 +53,7 @@ public class UserServiceImpl implements userService {
         Optional<UserModel> user = user_repository.findByEmail(email);
 
         if(user.isEmpty()) {
-            return new ResponseEntity<>(
-                    new Response(
-                            "Incorrect Email/Password",
-                            HttpStatus.UNAUTHORIZED,
-                            null
-                    ),
-                    HttpStatus.UNAUTHORIZED
-            );
+            throw new UsernameNotFoundException("email Id not found");
         }
         UserModel getUser = user.get();
 

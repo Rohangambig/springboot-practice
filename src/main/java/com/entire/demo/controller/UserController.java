@@ -4,6 +4,7 @@ import com.entire.demo.DTO.LoginDTO;
 import com.entire.demo.Model.UserModel;
 import com.entire.demo.service.userService;
 import com.entire.demo.utili.Response;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -40,8 +41,9 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<Response> loginUser(@RequestBody LoginDTO user) {
+    public ResponseEntity<Response> loginUser(@Valid @RequestBody LoginDTO user) {
         try {
+            System.out.println("Controller cached");
             return user_service.loginUser(user.getEmail(), user.getPassword());
         } catch(Exception e) {
             Response res = new Response(
