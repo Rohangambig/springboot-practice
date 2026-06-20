@@ -1,4 +1,4 @@
-package com.entire.demo.dto;
+package com.entire.demo.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequestDTO {
+public class LoginDTO {
     private String email;
     private String password;
 }
