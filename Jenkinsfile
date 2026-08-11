@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven-3.9'
+        maven 'Mvn-jome'
     }
 
     environment {
