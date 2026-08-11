@@ -8,7 +8,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'rohanambig/my-spring-app'
-        IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
     stages {
@@ -19,12 +18,28 @@ pipeline {
             }
         }
 
+        stage('Create Image Tag') {
+            steps {
+                script {
+                    def dateTime = sh(
+                        script: "date '+%Y.%m.%d-%H.%M.%S'",
+                        returnStdout: true
+                    ).trim()
+
+                    def branch = env.BRANCH_NAME ?: 'main'
+
+                    env.IMAGE_TAG = "v${dateTime}-${branch}"
+
+                    echo "Docker Image: ${IMAGE_NAME}:${IMAGE_TAG}"
+                }
+            }
+        }
+
         stage('Compile') {
             steps {
                 sh 'mvn clean compile'
             }
         }
-
 
         stage('Package') {
             steps {
@@ -38,7 +53,7 @@ pipeline {
             }
         }
 
-        stage('Display Image Version') {
+        stage('Display Image') {
             steps {
                 echo "Docker Image: ${IMAGE_NAME}:${IMAGE_TAG}"
             }
