@@ -13,18 +13,39 @@ pipeline {
 
     stages {
 
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                checkout scm
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh 'mvn package -DskipTests'
             }
         }
 
         stage('Docker Build') {
             steps {
-                sh """
-                    docker build \
-                    -t ${IMAGE_NAME}:${IMAGE_TAG} .
-                """
+                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+            }
+        }
+
+        stage('Display Image Version') {
+            steps {
+                echo "Docker Image: ${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
     }
