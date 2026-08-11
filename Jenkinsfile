@@ -41,6 +41,23 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=spring-second-project
+                    '''
+                }
+            }
+        }
+
         stage('Package') {
             steps {
                 sh 'mvn package -DskipTests'
